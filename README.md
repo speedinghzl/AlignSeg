@@ -2,6 +2,9 @@
 Pytorch code for paper entitled *AlignSeg: Feature-Aligned Segmentation Networks*. This is a minimal code to run Alignseg on Cityscape dataset.
 Shortly afterwards, the code will be reorganized with MMSegmentation.
 
+## Architecture
+![Overview of Alignseg](https://user-images.githubusercontent.com/4509744/118447960-f52c6d80-b723-11eb-8af5-12fdedc13262.png)
+
 
 ### Requirements && Install
 Python 3.7
@@ -52,3 +55,7 @@ If you find this code useful in your research, please consider citing:
         pages={1-1},
         doi={10.1109/TPAMI.2021.3062772}
     }
+
+## Visualization of the offset maps
+![Overview of offset maps](https://user-images.githubusercontent.com/4509744/118448066-18571d00-b724-11eb-8d49-382ed9858b83.png)
+Some visualization of offsets learned in different aggregation stages on the Cityscapes \emph{val} set. The visualizations of each sample are displayed in two rows. The  image  with  its  ground  truth are given in the first column. The following 4 columns represent the offsets in four AlignFA modules, respectively. The upper row contains the offset maps $\Delta^A$ and the lower row contains the offset maps $\Delta^F$. The 1st AlignFA is closer to the input layer, and the 4th AlignFA is closer to the output layer. 
