@@ -9,7 +9,7 @@ Shortly afterwards, the code will be reorganized with MMSegmentation.
 ### Requirements && Install
 Python 3.7
 
-2 x 32g GPUs (e.g. TITAN XP)
+2 x 32g GPUs (e.g. V100)
 
 ```bash
 # Install **Apex**
