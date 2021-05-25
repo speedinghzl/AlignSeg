@@ -1,4 +1,4 @@
-# AlignSeg [pdf](https://arxiv.org/pdf/2003.00872)
+# [AlignSeg: Feature-Aligned Segmentation Networks](https://arxiv.org/pdf/2003.00872)
 Pytorch code for the TPAMI paper entitled ***AlignSeg: Feature-Aligned Segmentation Networks***. This is a minimal code to run Alignseg on Cityscape dataset.
 Shortly afterwards, the code will be reorganized with MMSegmentation.
 
