@@ -45,15 +45,12 @@ Please download MIT imagenet pretrained [resnet101-imagenet.pth](https://drive.g
 
 If you find this code useful in your research, please consider citing:
 
-    @ARTICLE{alignseg,
+    @article{huang2021alignseg,
         title={Alignseg: Feature-aligned segmentation networks},
-        author={Huang, Zilong and Wei, Yunchao and Wang, Xinggang and Liu, Wenyu and Huang, Thomas S and Shi, Honghui},
+        author={Huang, Zilong and Wei, Yunchao and Wang, Xinggang and Shi, Humphrey and Liu, Wenyu and Huang, Thomas S},
         journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
         year={2021},
-        volume={},
-        number={},
-        pages={1-1},
-        doi={10.1109/TPAMI.2021.3062772}
+        publisher={IEEE}
     }
 
 ## Visualization of the offset maps
