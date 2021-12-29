@@ -167,11 +167,14 @@ class CAB(nn.Module):
         self.delta_gen1[2].weight.data.zero_()
         self.delta_gen2[2].weight.data.zero_()
 
+    # https://github.com/speedinghzl/AlignSeg/issues/7
+    # the normlization item is set to [w/s, h/s] rather than [h/s, w/s]
+    # the function bilinear_interpolate_torch_gridsample2 is standard implementation, please use bilinear_interpolate_torch_gridsample2 for training.
     def bilinear_interpolate_torch_gridsample(self, input, size, delta=0):
         out_h, out_w = size
         n, c, h, w = input.shape
         s = 1.0
-        norm = torch.tensor([[[[h/s, w/s]]]]).type_as(input).to(input.device)
+        norm = torch.tensor([[[[w/s, h/s]]]]).type_as(input).to(input.device)
         w_list = torch.linspace(-1.0, 1.0, out_h).view(-1, 1).repeat(1, out_w)
         h_list = torch.linspace(-1.0, 1.0, out_w).repeat(out_h, 1)
         grid = torch.cat((h_list.unsqueeze(2), w_list.unsqueeze(2)), 2)
@@ -184,14 +187,15 @@ class CAB(nn.Module):
     def bilinear_interpolate_torch_gridsample2(self, input, size, delta=0):
         out_h, out_w = size
         n, c, h, w = input.shape
-        norm = torch.tensor([[[[1, 1]]]]).type_as(input).to(input.device)
-
-        delta_clam = torch.clamp(delta.permute(0, 2, 3, 1) / norm, -1, 1)
-        grid = torch.stack(torch.meshgrid(torch.linspace(-1,1,out_h), torch.linspace(-1,1,out_w)), dim=-1).unsqueeze(0)
+        s = 2.0
+        norm = torch.tensor([[[[(out_w-1)/s, (out_h-1)/s]]]]).type_as(input).to(input.device) # not [h/s, w/s]
+        w_list = torch.linspace(-1.0, 1.0, out_h).view(-1, 1).repeat(1, out_w)
+        h_list = torch.linspace(-1.0, 1.0, out_w).repeat(out_h, 1)
+        grid = torch.cat((h_list.unsqueeze(2), w_list.unsqueeze(2)), 2)
         grid = grid.repeat(n, 1, 1, 1).type_as(input).to(input.device)
+        grid = grid + delta.permute(0, 2, 3, 1) / norm
 
-        grid = grid.detach() + delta_clam
-        output = F.grid_sample(input, grid)
+        output = F.grid_sample(input, grid, align_corners=True)
         return output
 
     def forward(self, low_stage, high_stage):
